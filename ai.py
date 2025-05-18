@@ -21,4 +21,18 @@ torch.manual_seed(1337)
 with open('input.txt', 'r', encoding='utf-8') as f:
     text = f.read()
 
-print(len(text))
+
+chars = sorted(list(set(text)))
+vocab_size = len(chars)
+
+# stoi = String to Int ///// itos = Int to String
+# for each character in chars
+stoi = { ch:i for i, ch in enumerate(chars) }
+itos = { i:ch for i, ch in enumerate(chars) }
+
+encode = lambda s: [stoi[c] for c in s]
+decode = lambda l: ''.join([itos[i] for i in l])
+
+data = torch.tensor(encode(text), dtype=torch.long)
+print(data.shape, data.dtype)
+print(data[:100])
